@@ -10,15 +10,15 @@ export class KafkaConsumerController {
   }
 
   handle(message: IKafkaParams) {
-    // const { data, eventName } = message;
+    const { data, eventName } = message;
 
-    // switch (eventName) {
-    //   case KafkaEvent.AUTH_LOGIN:
+    switch (eventName) {
+      // case KafkaEvent.AUTH_LOGIN:
 
-    //     break;
+      //   break;
 
-    //   default:
-    //     break;
-    // }
+      default:
+        break;
+    }
   }
 }

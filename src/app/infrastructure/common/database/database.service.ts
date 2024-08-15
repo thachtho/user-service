@@ -1,7 +1,7 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
-import { Pool } from 'pg';
+import { Pool, QueryResult } from 'pg';
 import { CONNECTION_POOL } from './database.module-definition';
-import { from } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { createTableQuery } from 'src/asset/sql/create-table';
 
 @Injectable()
@@ -12,7 +12,7 @@ class DatabaseService implements OnModuleInit {
     return this.runQuery(createTableQuery);
   }
 
-  runQuery(query: string, params?: unknown[]) {
+  runQuery(query: string, params?: unknown[]): Observable<QueryResult<any>> {
     return from(this.pool.query(query, params));
   }
 }

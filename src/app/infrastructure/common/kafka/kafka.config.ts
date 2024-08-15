@@ -8,7 +8,11 @@ export const kafkaConfig = () => {
     transport: Transport.KAFKA,
     options: {
       client: {
+        clientId: 'user',
         brokers: [`${kafkaHost}:${kafkaPort}`],
+      },
+      consumer: {
+        groupId: 'user-consumer',
       },
     },
   };
