@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import DatabaseModule from 'src/app/infrastructure/common/database/database.module';
+import { UserModule } from './controllers/rest-api/user.module';
 import { KafkaConsumerModule } from './controllers/message/kafka-consumer.module';
-import { UserModule } from './controllers/message/rest-api/user.module';
 
 @Module({
   imports: [

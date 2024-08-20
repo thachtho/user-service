@@ -1,21 +1,24 @@
 import { Controller } from '@nestjs/common';
-import { EventPattern, Payload } from '@nestjs/microservices';
-import { IKafkaParams, KafkaMessage } from './kafka.controler.i';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { Observable } from 'rxjs';
+import { HealthCheck } from './health-check/health-check';
+import { IKafkaParams, KafkaEvent, KafkaMessage } from './kafka.controler.i';
 
 @Controller()
 export class KafkaConsumerController {
-  @EventPattern(KafkaMessage)
-  message(@Payload() message: IKafkaParams) {
+  constructor(private readonly healthCheck: HealthCheck) {}
+
+  @MessagePattern(KafkaMessage)
+  message(@Payload() message: IKafkaParams): Observable<any> {
     return this.handle(message);
   }
 
-  handle(message: IKafkaParams) {
-    const { data, eventName } = message;
+  handle(message: IKafkaParams): Observable<any> {
+    const { eventName } = message;
 
     switch (eventName) {
-      // case KafkaEvent.AUTH_LOGIN:
-
-      //   break;
+      case KafkaEvent.HEALTH_CHECK:
+        return this.healthCheck.setTimeLive();
 
       default:
         break;
