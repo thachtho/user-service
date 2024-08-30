@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class GetUserByEmailDTO {
+export class ParamsNickNameDTO {
   @IsNotEmpty()
   @IsString()
-  email: string;
+  nickname: string;
 }

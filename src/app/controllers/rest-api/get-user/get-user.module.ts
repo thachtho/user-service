@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { GetUserController } from './get-user';
-import { GetByEmailUseCaseModule } from '@application/get-by-email/get-by-email.usecase.module';
+import { GetUserByNickNameDTOModule } from '@infrastructure/query/get-by-nickname/get-user-by-nickname.dto.module';
 
 @Module({
-  imports: [GetByEmailUseCaseModule],
+  imports: [GetUserByNickNameDTOModule],
   controllers: [GetUserController],
 })
 export class GetUserModule {}

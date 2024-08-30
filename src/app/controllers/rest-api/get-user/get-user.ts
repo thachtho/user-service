@@ -1,13 +1,18 @@
-import { GetByEmailUseCase } from '@application/get-by-email/get-by-email.usecase';
-import { Controller, Get, Param } from '@nestjs/common';
-import { GetUserByEmailDTO } from './get-user.dto';
+import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import { ParamsNickNameDTO } from './get-user.i';
+import { GetUserByNickNameDTO } from '@infrastructure/query/get-by-nickname/get-user-by-nickname.dto';
 
-@Controller('user')
+@Controller('users')
 export class GetUserController {
-  constructor(private readonly getByEmailUseCase: GetByEmailUseCase) {}
+  constructor(private readonly getByNickNameDto: GetUserByNickNameDTO) {}
 
-  @Get(':email')
-  findByEmail(@Param() params: GetUserByEmailDTO) {
-    return this.getByEmailUseCase.excute(params.email);
+  @Get('/find-by-id/:id')
+  findById(@Param('id') id: ParseIntPipe) {
+    return this.getByNickNameDto.getUserById(+id);
+  }
+
+  @Get('/find-by-nickname/:nickname')
+  findByEmail(@Param() params: ParamsNickNameDTO) {
+    return this.getByNickNameDto.getUserByNickName(params.nickname);
   }
 }
