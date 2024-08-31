@@ -1,7 +1,7 @@
-import { kafkaConfig } from 'src/app/infrastructure/common/kafka/kafka.config';
 import { NestFactory } from '@nestjs/core';
 import { useContainer } from 'class-validator';
 import { ValidationPipe } from '@nestjs/common';
+import { kafkaConfig } from '../config/kafka/kafka.config';
 
 export class App {
   static async bootstrap(module: any) {
