@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Observable, map, of, switchMap } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 import { randomNumber } from '../../common/number';
 import { UserRepository } from '../repositories/user.repository';
 import { UserFromDB } from '../repositories/user.repository.i';
