@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Logger } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import { CreateAdminAgencyHandler } from './create-admin-agency-handler/create-admin-agency-handler';
@@ -14,6 +14,8 @@ import { UpdateUserHandler } from './update-user-handler/update-user-handler';
 
 @Controller()
 export class KafkaConsumerController {
+  private readonly logger = new Logger(KafkaConsumerController.name);
+
   constructor(
     private readonly healthCheck: HealthCheck,
     private readonly createAdminAgencyHandler: CreateAdminAgencyHandler,
@@ -51,6 +53,9 @@ export class KafkaConsumerController {
   @MessagePattern(KafkaTopics.UPDATE_USER)
   updateUser(@Payload() payload: CreateUserMessageArg) {
     const { data } = payload;
+    this.logger.debug(
+      `Run in ${KafkaConsumerController.name}, funtion: ${KafkaConsumerController.prototype.updateUser.name}, params: ${JSON.stringify(payload)}`,
+    );
     return this.updateUserHandler.handle(data);
   }
 }
