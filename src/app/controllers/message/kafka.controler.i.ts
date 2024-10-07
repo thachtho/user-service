@@ -25,14 +25,12 @@ export interface CreateAdminAgencyArg {
   agencyId: number;
 }
 
-export interface CreateTeacherArg {
+export interface CreateTeacherOrStudentArg {
   fullname: string;
-  agencyId: string;
+  agencyId: number;
 }
-
-export interface CreateStudentArg extends CreateTeacherArg {}
 
 export interface CreateUserMessageArg {
   type: TypeCreateUser;
-  data: CreateAdminAgencyArg | CreateStudentArg | CreateTeacherArg;
+  data: CreateAdminAgencyArg | CreateTeacherOrStudentArg;
 }

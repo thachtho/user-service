@@ -1,6 +1,6 @@
 export interface UserEntityArg {
   id?: number;
-  nickname: string;
+  nickname?: string;
   fullname?: string;
   password?: string;
   email?: string;

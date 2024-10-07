@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import * as path from 'path';
-import { map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { getUserById } from '../../../asset/sql/get-user-by-id';
 import { getUserByNickName } from '../../../asset/sql/get-user-by-nickname';
 import DatabaseService from '../common/database/database.service';
-import { IUserEntity } from './user.repository.i';
+import { IUserEntity, UserFromDB } from './user.repository.i';
 
 @Injectable()
 export class UserRepository {
@@ -32,10 +32,10 @@ export class UserRepository {
       );
   }
 
-  getUserByNickName(nickname: string) {
+  getUserByNickName(nickname: string): Observable<UserFromDB | null> {
     return this.databaseService.runQuery(getUserByNickName, [nickname]).pipe(
       map((res) => {
-        return res.rows[0];
+        return res.rows[0] || null;
       }),
     );
   }

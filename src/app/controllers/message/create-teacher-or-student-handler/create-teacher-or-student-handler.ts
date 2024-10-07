@@ -1,14 +1,14 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { ParamsUseCase } from './create-admin-agency-handler.i';
-import { validator } from '../../../common/validator';
 import { RpcException } from '@nestjs/microservices';
 import { catchError } from 'rxjs';
-import { ErrorCustom } from '../../../common';
-import { TypeCreateUser } from '../kafka.controler.i';
 import { CreateUserUseCase } from '../../../application/create-user/create-user.usecase';
+import { ErrorCustom } from '../../../common';
+import { validator } from '../../../common/validator';
+import { TypeCreateUser } from '../kafka.controler.i';
+import { ParamsUseCase } from './create-teacher-or-student-handler.i';
 
 @Injectable()
-export class CreateAdminAgencyHandler {
+export class CreateTeacherOrStudentHandler {
   constructor(private usecase: CreateUserUseCase) {}
 
   handle(payload: ParamsUseCase, type: TypeCreateUser) {
@@ -32,11 +32,10 @@ export class CreateAdminAgencyHandler {
     const schema = {
       type: 'object',
       properties: {
-        email: { type: 'string' },
-        nickname: { type: 'string' },
+        fullname: { type: 'string' },
         agencyId: { type: 'number' },
       },
-      required: ['nickname', 'email', 'agencyId'],
+      required: ['fullname', 'agencyId'],
       additionalProperties: false,
     };
 

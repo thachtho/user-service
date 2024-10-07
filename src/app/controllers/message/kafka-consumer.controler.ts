@@ -5,15 +5,18 @@ import { CreateAdminAgencyHandler } from './create-admin-agency-handler/create-a
 import { HealthCheck } from './health-check/health-check';
 import {
   CreateAdminAgencyArg,
+  CreateTeacherOrStudentArg,
   CreateUserMessageArg,
   KafkaTopics,
 } from './kafka.controler.i';
+import { CreateTeacherOrStudentHandler } from './create-teacher-or-student-handler/create-teacher-or-student-handler';
 
 @Controller()
 export class KafkaConsumerController {
   constructor(
     private readonly healthCheck: HealthCheck,
     private readonly createAdminAgencyHandler: CreateAdminAgencyHandler,
+    private readonly createTeacherOrStudentHandler: CreateTeacherOrStudentHandler,
   ) {}
 
   @MessagePattern(KafkaTopics.HEALTH_CHECK)
@@ -29,6 +32,13 @@ export class KafkaConsumerController {
       case 'adminAgency':
         return this.createAdminAgencyHandler.handle(
           data as CreateAdminAgencyArg,
+          type,
+        );
+      case 'teacher':
+      case 'student':
+        return this.createTeacherOrStudentHandler.handle(
+          data as CreateTeacherOrStudentArg,
+          type,
         );
 
       default:
