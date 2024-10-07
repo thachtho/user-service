@@ -1,15 +1,38 @@
 import { Controller } from '@nestjs/common';
-import { MessagePattern } from '@nestjs/microservices';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
+import { CreateAdminAgencyHandler } from './create-admin-agency-handler/create-admin-agency-handler';
 import { HealthCheck } from './health-check/health-check';
-import { KafkaTopics } from './kafka.controler.i';
+import {
+  CreateAdminAgencyArg,
+  CreateUserMessageArg,
+  KafkaTopics,
+} from './kafka.controler.i';
 
 @Controller()
 export class KafkaConsumerController {
-  constructor(private readonly healthCheck: HealthCheck) {}
+  constructor(
+    private readonly healthCheck: HealthCheck,
+    private readonly createAdminAgencyHandler: CreateAdminAgencyHandler,
+  ) {}
 
   @MessagePattern(KafkaTopics.HEALTH_CHECK)
   handleHealthCheck(): Observable<any> {
     return this.healthCheck.setTimeLive();
+  }
+
+  @MessagePattern(KafkaTopics.CREATE_USER)
+  createUser(@Payload() payload: CreateUserMessageArg) {
+    const { type, data } = payload;
+
+    switch (type) {
+      case 'adminAgency':
+        return this.createAdminAgencyHandler.handle(
+          data as CreateAdminAgencyArg,
+        );
+
+      default:
+        break;
+    }
   }
 }
