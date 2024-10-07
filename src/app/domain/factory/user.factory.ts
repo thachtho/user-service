@@ -19,6 +19,7 @@ export class UserFactory {
             roleId: Role.ADMIN_AGENCY,
             fullname: arg.nickname,
           };
+
           return new UserEntity(adminAgency);
         case 'teacher':
           const teacher = { ...arg, roleId: Role.TEACHER };

@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
+import { CreateUserUseCaseModule } from '../../../application/create-user/create-user.usecase.module';
 import { CreateAdminAgencyHandler } from './create-admin-agency-handler';
-import { CreateAdminAgencyUseCaseModule } from '../../../application/create-admin-agency/create-admin-agency.usecase.module';
 
 @Module({
-  imports: [CreateAdminAgencyUseCaseModule],
+  imports: [CreateUserUseCaseModule],
   providers: [CreateAdminAgencyHandler],
   exports: [CreateAdminAgencyHandler],
 })

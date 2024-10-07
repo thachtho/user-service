@@ -1,13 +1,13 @@
 export type TypeCreateUser = 'adminAgency' | 'teacher' | 'student';
 export enum Role {
-  ADMIN_AGENCY = 1,
-  TEACHER = 2,
-  STUDENT = 3,
+  ADMIN_AGENCY = 2,
+  TEACHER = 3,
+  STUDENT = 4,
 }
 
 export interface UserFactoryArg {
   id?: number;
-  nickname: string;
+  nickname?: string;
   fullname?: string;
   password?: string;
   email?: string;

@@ -26,6 +26,10 @@ export function isArray(value: any) {
   return Array.isArray(value);
 }
 
+export function isArrayHasValue(value: any) {
+  return Array.isArray(value) && value.length > 0;
+}
+
 export function isNaN(value: any) {
   return isNaN(value);
 }
