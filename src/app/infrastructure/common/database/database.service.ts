@@ -1,7 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Pool, QueryResult } from 'pg';
-import { Observable, from } from 'rxjs';
+import { Observable, from, mergeMap } from 'rxjs';
 import { CONNECTION_POOL } from './database.module-definition';
+import { promisify } from 'util';
+import * as fs from 'fs';
+
+const externals = {
+  readFile: promisify(fs.readFile),
+};
 
 @Injectable()
 class DatabaseService {
@@ -9,6 +15,15 @@ class DatabaseService {
 
   runQuery(query: string, params?: unknown[]): Observable<QueryResult<any>> {
     return from(this.pool.query(query, params));
+  }
+
+  queryByFile(filePath: string, params?: any[]) {
+    return from(externals.readFile(filePath)).pipe(
+      mergeMap((buffer) => {
+        const query = buffer.toString();
+        return this.runQuery(query, params);
+      }),
+    );
   }
 }
 
