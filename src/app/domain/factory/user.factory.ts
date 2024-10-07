@@ -31,10 +31,11 @@ export class UserFactory {
           break;
       }
     } catch (error) {
-      console.log('🚀 ~ UserFactory ~ createUser ~ error:', error);
       throwError(() => error);
     }
   }
+
+  updateUser() {}
 
   hashPassword() {
     return passwordDefault;

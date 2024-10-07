@@ -3,12 +3,14 @@ import { CreateAdminAgencyHandlerModule } from './create-admin-agency-handler/cr
 import { CreateTeacherOrStudentHandlerModule } from './create-teacher-or-student-handler/create-teacher-or-student-handler.module';
 import { HealthModule } from './health-check/health-check.module';
 import { KafkaConsumerController } from './kafka-consumer.controler';
+import { UpdateUserHandlerModule } from './update-user-handler/update-user-handler.module';
 
 @Module({
   imports: [
     HealthModule,
     CreateAdminAgencyHandlerModule,
     CreateTeacherOrStudentHandlerModule,
+    UpdateUserHandlerModule,
   ],
   controllers: [KafkaConsumerController],
   providers: [],
