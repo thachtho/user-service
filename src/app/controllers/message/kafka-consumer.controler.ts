@@ -10,6 +10,7 @@ import {
   KafkaTopics,
 } from './kafka.controler.i';
 import { CreateTeacherOrStudentHandler } from './create-teacher-or-student-handler/create-teacher-or-student-handler';
+import { UpdateUserHandler } from './update-user-handler/update-user-handler';
 
 @Controller()
 export class KafkaConsumerController {
@@ -17,6 +18,7 @@ export class KafkaConsumerController {
     private readonly healthCheck: HealthCheck,
     private readonly createAdminAgencyHandler: CreateAdminAgencyHandler,
     private readonly createTeacherOrStudentHandler: CreateTeacherOrStudentHandler,
+    private readonly updateUserHandler: UpdateUserHandler,
   ) {}
 
   @MessagePattern(KafkaTopics.HEALTH_CHECK)
@@ -44,5 +46,11 @@ export class KafkaConsumerController {
       default:
         break;
     }
+  }
+
+  @MessagePattern(KafkaTopics.UPDATE_USER)
+  updateUser(@Payload() payload: CreateUserMessageArg) {
+    const { data } = payload;
+    return this.updateUserHandler.handle(data);
   }
 }

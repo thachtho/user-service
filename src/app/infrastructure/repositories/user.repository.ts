@@ -32,6 +32,27 @@ export class UserRepository {
       );
   }
 
+  updateUser(arg: UserFromDB) {
+    const filePath = `${this.path}/update-user.sql`;
+    const params = [
+      arg.id,
+      arg.nickname,
+      arg.fullname,
+      arg.email,
+      arg.password,
+      arg.roleId,
+      arg.agencyId,
+    ];
+
+    return this.databaseService
+      .queryByFile(path.join(__dirname, filePath), params)
+      .pipe(
+        map((res) => {
+          return res.rows[0];
+        }),
+      );
+  }
+
   getUserByNickName(nickname: string): Observable<UserFromDB | null> {
     return this.databaseService.runQuery(getUserByNickName, [nickname]).pipe(
       map((res) => {
@@ -40,10 +61,10 @@ export class UserRepository {
     );
   }
 
-  getUserById(id: number) {
+  getUserById(id: number): Observable<UserFromDB | null> {
     return this.databaseService.runQuery(getUserById, [id]).pipe(
       map((res) => {
-        return res.rows[0];
+        return res.rows[0] || null;
       }),
     );
   }

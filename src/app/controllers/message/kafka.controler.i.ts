@@ -6,6 +6,7 @@ export interface IKafkaParams {
 export enum KafkaTopics {
   HEALTH_CHECK = 'health_check',
   CREATE_USER = 'create_user',
+  UPDATE_USER = 'update_user',
 }
 
 export enum KafkaClient {
