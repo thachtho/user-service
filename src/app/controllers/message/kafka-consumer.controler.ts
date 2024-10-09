@@ -8,6 +8,7 @@ import {
   CreateTeacherOrStudentArg,
   CreateUserMessageArg,
   KafkaTopics,
+  UpdateUserMessageArg,
 } from './kafka.controler.i';
 import { CreateTeacherOrStudentHandler } from './create-teacher-or-student-handler/create-teacher-or-student-handler';
 import { UpdateUserHandler } from './update-user-handler/update-user-handler';
@@ -51,7 +52,7 @@ export class KafkaConsumerController {
   }
 
   @MessagePattern(KafkaTopics.UPDATE_USER)
-  updateUser(@Payload() payload: CreateUserMessageArg) {
+  updateUser(@Payload() payload: UpdateUserMessageArg) {
     const { data } = payload;
     this.logger.debug(
       `Run in ${KafkaConsumerController.name}, funtion: ${KafkaConsumerController.prototype.updateUser.name}, params: ${JSON.stringify(payload)}`,
