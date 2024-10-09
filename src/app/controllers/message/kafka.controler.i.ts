@@ -19,6 +19,10 @@ export enum KafkaHealthCheck {
   WAITING = 'waiting',
 }
 
+export interface KafkaMessage<T> {
+  data: T;
+}
+
 export type TypeCreateUser = 'adminAgency' | 'teacher' | 'student';
 export interface CreateAdminAgencyArg {
   nickname: string;
@@ -35,3 +39,13 @@ export interface CreateUserMessageArg {
   type: TypeCreateUser;
   data: CreateAdminAgencyArg | CreateTeacherOrStudentArg;
 }
+
+export interface DataUpdateUserMessage {
+  id: number;
+  email?: string;
+  nickname?: string;
+  fullname?: string;
+  password?: string;
+}
+export interface UpdateUserMessageArg
+  extends KafkaMessage<DataUpdateUserMessage> {}
