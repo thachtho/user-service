@@ -68,4 +68,17 @@ export class UserRepository {
       }),
     );
   }
+
+  findAll(typeGet: number, organizationId: number) {
+    const filePath = `${this.path}/find-all.sql`;
+    const params = [typeGet, organizationId];
+
+    return this.databaseService
+      .queryByFile(path.join(__dirname, filePath), params)
+      .pipe(
+        map((res) => {
+          return res.rows;
+        }),
+      );
+  }
 }
